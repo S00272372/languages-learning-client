@@ -1,0 +1,7 @@
+<div class="card">
+  <h3>{{ course().title }}</h3>
+  <p>{{ course().language }} - Level {{ course().level }}</p>
+  <p>{{ course().description }}</p>
+
+  <a [routerLink]="['/courses', course()._id]">View Course</a>
+</div>

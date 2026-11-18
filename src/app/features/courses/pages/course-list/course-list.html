@@ -1,0 +1,18 @@
+<div class="course-list-container">
+  <h2>Courses</h2>
+
+  @let s = state();
+  @if (s.status === 'loading') {
+    <p>Loading courses...</p>
+  } @else if (s.status === 'error') {
+    <p>{{ s.message }}</p>
+  } @else if (s.data.length === 0) {
+    <p>No courses available at the moment.</p>
+  } @else {
+    <div class="grid">
+      @for (course of s.data; track course._id) {
+        <app-course-card [course]="course" />
+      }
+    </div>
+  }
+</div>
