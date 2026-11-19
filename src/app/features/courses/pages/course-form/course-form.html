@@ -1,0 +1,76 @@
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="course-form">
+  @if (saving()) {
+    <mat-progress-bar mode="buffer" />
+  }
+
+  <h2>{{ id() ? 'Edit Course' : 'Add Course' }}</h2>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" placeholder="e.g. Spanish for Beginners" />
+    @if (courseForm.controls.title.hasError('required')) {
+      <mat-error>Title is required</mat-error>
+    } @else if (courseForm.controls.title.hasError('minlength')) {
+      <mat-error>Title must be at least 3 characters</mat-error>
+    } @else if (courseForm.controls.title.hasError('maxlength')) {
+      <mat-error>Title must be 100 characters or fewer</mat-error>
+    }
+    @if (courseForm.controls.title.hasError('blank')) {
+      <mat-error>Title cannot be only spaces</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description" rows="4"></textarea>
+    @if (courseForm.controls.description.hasError('required')) {
+      <mat-error>Description is required</mat-error>
+    } @else if (courseForm.controls.description.hasError('minlength')) {
+      <mat-error>Description must be at least 10 characters</mat-error>
+    } @else if (courseForm.controls.description.hasError('maxlength')) {
+      <mat-error>Description must be 500 characters or fewer</mat-error>
+    }
+    @if (courseForm.controls.description.hasError('blank')) {
+      <mat-error>Description cannot be only spaces</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Language</mat-label>
+    <input matInput formControlName="language" placeholder="e.g. Spanish" />
+    @if (courseForm.controls.language.hasError('required')) {
+      <mat-error>Language is required</mat-error>
+    } @else if (courseForm.controls.language.hasError('minlength')) {
+      <mat-error>Language must be at least 2 characters</mat-error>
+    } @else if (courseForm.controls.language.hasError('maxlength')) {
+      <mat-error>Language must be 50 characters or fewer</mat-error>
+    }
+    @if (courseForm.controls.language.hasError('blank')) {
+      <mat-error>Language cannot be only spaces</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Level</mat-label>
+    <select matNativeControl formControlName="level">
+      <option value="" disabled></option>
+      @for (level of levels; track level) {
+        <option [value]="level">{{ level }}</option>
+      }
+    </select>
+    @if (courseForm.controls.level.hasError('required')) {
+      <mat-error>Level is required</mat-error>
+    }
+  </mat-form-field>
+
+  @if (saveError(); as message) {
+    <p role="alert" class="error">{{ message }}</p>
+  }
+
+  <div class="button-group">
+    <button matButton="filled" type="submit" [disabled]="courseForm.invalid || saving()">
+      {{ saving() ? 'Saving...' : 'Save course' }}
+    </button>
+    <a matButton routerLink="/courses">Cancel</a>
+  </div>
+</form>

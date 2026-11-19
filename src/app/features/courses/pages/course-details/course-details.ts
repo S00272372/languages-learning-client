@@ -5,10 +5,12 @@ import { Router, RouterLink } from '@angular/router';
 import { Course } from '../../models/course.model';
 import { CourseService } from '../../services/course.service';
 import { LoadState, withLoadState } from '../../../../shared/load-state';
+import { MatButtonModule } from '@angular/material/button';
+import { LessonList } from '../../../lessons/components/lesson-list/lesson-list';
 
 @Component({
   selector: 'app-course-details',
-  imports: [RouterLink],
+  imports: [RouterLink, MatButtonModule, LessonList],
   templateUrl: './course-details.html',
   styleUrl: './course-details.scss',
 })

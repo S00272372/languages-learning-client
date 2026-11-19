@@ -1,5 +1,6 @@
 <div class="course-list-container">
   <h2>Courses</h2>
+      <a matButton="filled" routerLink="/courses/new">Add course</a>
 
   @let s = state();
   @if (s.status === 'loading') {

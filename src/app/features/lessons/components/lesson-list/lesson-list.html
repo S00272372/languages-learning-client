@@ -1,0 +1,61 @@
+<h3>Lessons</h3>
+
+@if (loading()) {
+  <p>Loading lessons...</p>
+} @else if (loadError(); as message) {
+  <p class="error">{{ message }}</p>
+} @else if (lessons().length === 0) {
+  <p>No lessons in this course yet.</p>
+} @else {
+  <ul class="lessons">
+    @for (lesson of lessons(); track lesson._id) {
+      <li>
+        <strong>{{ lesson.title }}</strong>
+        <p>{{ lesson.content }}</p>
+        <button matButton="outlined" (click)="deleteLesson(lesson)">Delete</button>
+      </li>
+    }
+  </ul>
+}
+
+<form [formGroup]="lessonForm" (ngSubmit)="onSubmit()" class="lesson-form">
+  <h4>Add lesson</h4>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Lesson title</mat-label>
+    <input matInput formControlName="title" />
+    @if (lessonForm.controls.title.hasError('required')) {
+      <mat-error>Title is required</mat-error>
+    } @else if (lessonForm.controls.title.hasError('minlength')) {
+      <mat-error>Title must be at least 3 characters</mat-error>
+    } @else if (lessonForm.controls.title.hasError('maxlength')) {
+      <mat-error>Title must be 100 characters or fewer</mat-error>
+    }
+    @if (lessonForm.controls.title.hasError('blank')) {
+      <mat-error>Title cannot be only spaces</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Content</mat-label>
+    <textarea matInput formControlName="content" rows="4"></textarea>
+    @if (lessonForm.controls.content.hasError('required')) {
+      <mat-error>Content is required</mat-error>
+    } @else if (lessonForm.controls.content.hasError('minlength')) {
+      <mat-error>Content must be at least 10 characters</mat-error>
+    } @else if (lessonForm.controls.content.hasError('maxlength')) {
+      <mat-error>Content must be 5000 characters or fewer</mat-error>
+    }
+    @if (lessonForm.controls.content.hasError('blank')) {
+      <mat-error>Content cannot be only spaces</mat-error>
+    }
+  </mat-form-field>
+
+  @if (saveError(); as message) {
+    <p role="alert" class="error">{{ message }}</p>
+  }
+
+  <button matButton="filled" type="submit" [disabled]="lessonForm.invalid || saving()">
+    {{ saving() ? 'Saving...' : 'Add lesson' }}
+  </button>
+</form>

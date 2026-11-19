@@ -1,4 +1,4 @@
-<a routerLink="/courses">Back to courses</a>
+<a matButton routerLink="/courses">Back to courses</a>
 
 @let s = state();
 @if (s.status === 'loading') {
@@ -10,10 +10,10 @@
   <p>{{ s.data.language }} - Level {{ s.data.level }}</p>
   <p>{{ s.data.description }}</p>
 
-  <button (click)="deleteCourse(s.data)" [disabled]="deleting()">
-    Delete
-  </button>
+<a matButton="filled" [routerLink]="['/courses', s.data._id, 'edit']">Edit</a>
   @if (deleteError(); as message) {
     <p class="error">{{ message }}</p>
   }
+  
+  <app-lesson-list [courseId]="s.data._id" />
 }
