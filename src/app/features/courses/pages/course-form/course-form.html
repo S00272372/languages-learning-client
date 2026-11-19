@@ -18,6 +18,9 @@
     @if (courseForm.controls.title.hasError('blank')) {
       <mat-error>Title cannot be only spaces</mat-error>
     }
+        @if (courseForm.controls.title.hasError('forbidden')) {
+      <mat-error>Title cannot be "test"</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="outline">

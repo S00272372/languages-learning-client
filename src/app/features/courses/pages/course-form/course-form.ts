@@ -8,7 +8,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateCourseDto } from '../../models/course.model';
 import { CourseService } from '../../services/course.service';
-import { notBlank } from '../../../../shared/validators/not-blank.validator';
+import { notBlank, forbiddenValue } from '../../../../shared/validators/not-blank.validator';
 
 @Component({
   selector: 'app-course-form',
@@ -36,7 +36,7 @@ export class CourseForm implements OnInit {
   readonly levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
   courseForm = this.formBuilder.nonNullable.group({
-    title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), notBlank]],
+        title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), notBlank, forbiddenValue('test')]],
     description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), notBlank]],
     language: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), notBlank]],
     level: ['', [Validators.required]],
